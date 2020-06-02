@@ -23,9 +23,13 @@ export class WebhookController {
 
     @Post()
     receiveMessages(
+        @Body() body: any,
         @Body('object') object: any,
         @Body('entry') entries: any,
     ): string {
+        console.debug('@@@ body: ', body);
+        console.debug('@@@ object: ', object);
+        console.debug('@@@ entry: ', entries);
         if (object === 'page') {
             entries.forEach(function (entry) {
                 const webhook_event = entry.messaging[0];
