@@ -1,1 +1,1 @@
-export const VERIFY_TOKEN = '86edae4c-a513-11ea-bb37-0242ac130002';
+export const VERIFY_TOKEN = process.env.PAGE_ACCESS_TOKEN;
