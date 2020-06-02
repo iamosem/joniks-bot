@@ -27,13 +27,9 @@ export class WebhookController {
         @Body('object') object: any,
         @Body('entry') entries: any,
     ): string {
-        console.debug('@@@ body: ', body);
-        console.debug('@@@ object: ', object);
-        console.debug('@@@ entry: ', entries);
         if (object === 'page') {
             entries.forEach(function (entry) {
-                const webhook_event = entry.messaging[0];
-                console.debug('@@@ event: ', webhook_event);
+                console.debug('@@@ entry : ', JSON.stringify(entry));
             });
             return 'EVENT_RECEIVED';
         } else {
