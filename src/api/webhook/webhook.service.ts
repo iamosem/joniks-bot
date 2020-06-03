@@ -24,14 +24,22 @@ export class WebhookService {
         response = this.postbackHandler.doHandle(sender_id, event);
       }
 
-      if (response) {
-        this.sendApiService
-        .sendMessageText(sender_id, response)
-        .subscribe(
-          () => this.subscribeToSendApiResponse(),
-          (res: any) => this.subscribeToSendApiError(res),
+      let sendObservable;
+      if (response.isTemplate) {
+        sendObservable = this.sendApiService.sendMessageTemplate(
+          sender_id,
+          response,
+        );
+      } else {
+        sendObservable = this.sendApiService.sendMessageText(
+          sender_id,
+          response,
         );
       }
+      sendObservable.subscribe(
+        () => this.subscribeToSendApiResponse(),
+        (res: any) => this.subscribeToSendApiError(res),
+      );
     }
   }
 

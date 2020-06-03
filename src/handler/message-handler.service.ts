@@ -54,6 +54,7 @@ export class MessageHandlerService implements IHandler {
             payload: 'no',
           },
         ],
+        true
       );
     }
     return null;

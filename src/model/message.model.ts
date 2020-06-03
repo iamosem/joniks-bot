@@ -6,6 +6,7 @@ export interface IMessage {
     subtitle?: string;
     image?: string;
     postbackButtons?: IPostbackButton[];
+    isTemplate?: boolean;
 };
 
 export class Message implements IMessage {
@@ -14,6 +15,7 @@ export class Message implements IMessage {
         public title?: string,
         public subtitle?: string,
         public image?: string,
-        public postbackButtons?: IPostbackButton[]
+        public postbackButtons?: IPostbackButton[],
+        public isTemplate?: boolean
     ) { }
 }
