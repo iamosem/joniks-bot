@@ -20,12 +20,16 @@ export class WebhookService {
       } else if (event.postback) {
         this.postbackHandler.doHandle(sender_id, event.postback);
       }
-      this.sendApiService
+
+
+      if (event.message.text.startsWith('debug-mode')) {
+        this.sendApiService
         .sendMessage(sender_id, `you've sent a message: ${event.message.text}`)
         .subscribe(
           () => this.subscribeToSendApiResponse(),
           () => this.subscribeToSendApiError(),
         );
+      }
     }
   }
 

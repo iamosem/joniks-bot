@@ -26,8 +26,9 @@ export class WebhookController {
         @Body('entry') entries: any,
     ): string {
         if (object === 'page') {
+            const self = this;
             entries.forEach(function (entry) {
-                this.webhookService.parseEvent(entry);
+                self.webhookService.parseEvent(entry);
             });
             return 'EVENT_RECEIVED';
         } else {
