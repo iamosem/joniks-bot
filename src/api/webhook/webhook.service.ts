@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { MessageHandlerService } from 'src/handler/message-handler.service';
 import { PostbackHandlerService } from 'src/handler/postback-handler.service';
 import { SendApiService } from 'src/core/send-api.service';
+import { IMessage } from 'src/model/message.model';
 
 @Injectable()
 export class WebhookService {
@@ -15,16 +16,17 @@ export class WebhookService {
     if ('messaging' in entry && entry.messaging.length !== 0) {
       const event = entry.messaging[0];
       const sender_id = event.sender.id;
+
+      let response: IMessage;
       if (event.message) {
-        this.messageHandler.doHandle(sender_id, event.message);
+        response = this.messageHandler.doHandle(sender_id, event);
       } else if (event.postback) {
-        this.postbackHandler.doHandle(sender_id, event.postback);
+        response = this.postbackHandler.doHandle(sender_id, event);
       }
 
-
-      if (event.message.text.startsWith('debug-mode')) {
+      if (response) {
         this.sendApiService
-        .sendMessage(sender_id, `you've sent a message: ${event.message.text}`)
+        .sendMessageText(sender_id, response)
         .subscribe(
           () => this.subscribeToSendApiResponse(),
           (res: any) => this.subscribeToSendApiError(res),
