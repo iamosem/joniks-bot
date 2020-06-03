@@ -8,8 +8,8 @@ export class SendApiService {
 
     constructor(private http: HttpService) {}
 
-    sendMessage(id: string, message: string) {
-        const body = { recipient: { id }, message };
+    sendMessage(id: string, text: string) {
+        const body = { recipient: { id }, message: { text } };
         return this.http.post(`${this.SEND_API_URL}?access_token=${ACCESS_TOKEN}`, body);
     }
 }
