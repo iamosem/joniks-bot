@@ -8,7 +8,7 @@ export class PostbackHandlerService implements IHandler {
     constructor() {}
     
     doHandle(sender_id: string, message: any): IMessage {
-        console.error('@@@ [POSTBACK] sender: ', sender_id, ' | message: ', message);
+        console.error('@@@ [POSTBACK] sender: ', sender_id, ' | message: ', JSON.stringify(message));
         return null;
     }
 }
