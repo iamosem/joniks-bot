@@ -27,7 +27,7 @@ export class WebhookService {
         .sendMessage(sender_id, `you've sent a message: ${event.message.text}`)
         .subscribe(
           () => this.subscribeToSendApiResponse(),
-          () => this.subscribeToSendApiError(),
+          (res: any) => this.subscribeToSendApiError(res),
         );
       }
     }
@@ -37,7 +37,7 @@ export class WebhookService {
     console.debug('@@@ message sent');
   }
 
-  private subscribeToSendApiError() {
-    console.debug('@@@ message sending failed');
+  private subscribeToSendApiError(res: any) {
+    console.debug('@@@ message sending failed', res);
   }
 }
