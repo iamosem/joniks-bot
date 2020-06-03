@@ -1,8 +1,9 @@
-import { HttpErrorService } from "./http-error.service";
-import { Module } from "@nestjs/common";
+import { HttpErrorService } from './http-error.service';
+import { Module } from '@nestjs/common';
+import { HandlerModule } from 'src/handler/handler.module';
 
 @Module({
-    providers: [HttpErrorService],
-    exports: [HttpErrorService]
+  providers: [HttpErrorService, HandlerModule],
+  exports: [HttpErrorService, HandlerModule],
 })
-export class CoreModule { }
+export class CoreModule {}

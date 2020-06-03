@@ -1,4 +1,4 @@
-import { Controller, Get, Body, Post, Query, HttpException } from '@nestjs/common';
+import { Controller, Get, Body, Post, Query } from '@nestjs/common';
 import { WebhookService } from './webhook.service';
 import { VERIFY_TOKEN } from 'src/constants';
 import { HttpErrorService } from 'src/core/http-error.service';
@@ -14,7 +14,6 @@ export class WebhookController {
         @Query('hub.challenge') challenge: string,
     ): string {
         if (mode === 'subscribe' && token === VERIFY_TOKEN) {
-            console.debug('@@@ WEBHOOK_VERIFIED');
             return challenge;
         } else {
             this.httpErrorService.throw403('Handshake failed.');
@@ -22,14 +21,13 @@ export class WebhookController {
     }
 
     @Post()
-    receiveMessages(
-        @Body() body: any,
+    receiveEvent(
         @Body('object') object: any,
         @Body('entry') entries: any,
     ): string {
         if (object === 'page') {
             entries.forEach(function (entry) {
-                console.debug('@@@ entry : ', JSON.stringify(entry));
+                this.webhookService.parseEvent(entry);
             });
             return 'EVENT_RECEIVED';
         } else {
