@@ -1,5 +1,19 @@
 import { IPostbackButton } from "./postback-buttons.model";
 
+export const enum MESSAGING_TYPE {
+    RESPONSE,
+    UPDATE,
+    MESSAGE_TAG
+};
+
+export const enum ATTACHMENT_TYPE {
+    AUDIO = 'audio',
+    VIDEO = 'video',
+    IMAGE = 'image',
+    FILE = 'file',
+    TEMPLATE = 'template'
+};
+
 export interface IMessage {
     text?: string;
     title?: string;

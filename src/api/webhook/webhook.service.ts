@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { MessageHandlerService } from 'src/handler/message-handler.service';
 import { PostbackHandlerService } from 'src/handler/postback-handler.service';
 import { SendApiService } from 'src/core/send-api.service';
-import { IMessage } from 'src/model/message.model';
+import { IMessage, MESSAGING_TYPE } from 'src/model/message.model';
 
 @Injectable()
 export class WebhookService {
@@ -25,13 +25,15 @@ export class WebhookService {
       }
 
       let sendObservable;
-      if (response.isTemplate) {
+      if (response && response.isTemplate) {
         sendObservable = this.sendApiService.sendMessageTemplate(
+          MESSAGING_TYPE.RESPONSE,
           sender_id,
           response,
         );
       } else {
         sendObservable = this.sendApiService.sendMessageText(
+          MESSAGING_TYPE.RESPONSE,
           sender_id,
           response,
         );
